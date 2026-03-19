@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="jakarta.faces.core"
+      xmlns:h="jakarta.faces.html">
+<f:view>
+    <h:head>
+        <title>#{AppMessages['title.login']}</title>
+    </h:head>
+    <h:body>
+        <h:form>
+            <h:panelGrid columns="2">
+                <h:outputLabel for="usernameField" value="#{AppMessages['label.user']}" />
+                <h:inputText id="usernameField"
+                             value="#{loginBean.username}"
+                             required="true"
+                             requiredMessage="#{AppMessages['validation.user']}" />
+
+                <h:outputLabel for="passwordField" value="#{AppMessages['label.password']}" />
+                <h:inputSecret id="passwordField"
+                               value="#{loginBean.password}"
+                               validatorMessage="#{AppMessages['validation.password']}">
+                    <f:validateLength minimum="4" maximum="6" />
+                </h:inputSecret>
+            </h:panelGrid>
+
+            <h:selectBooleanCheckbox id="acceptCheckBox"
+                                     binding="#{loginBean.acceptCheckbox}"
+                                     valueChangeListener="#{loginBean.activateButton}">
+                <f:ajax event="change" execute="@this" render="loginButton" />
+            </h:selectBooleanCheckbox>
+
+            <h:outputText value="I accept the terms of service" />
+            <br/>
+
+            <h:commandButton id="loginButton"
+                             value="#{AppMessages['label.login']}"
+                             action="#{loginBean.login()}"
+                             binding="#{loginBean.loginButton}"
+                             disabled="true" />
+        </h:form>
+    </h:body>
+</f:view>
+
+</html>
